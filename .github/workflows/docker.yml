@@ -79,17 +79,17 @@ jobs:
       #     platforms: all
       - name: Docker build amd64
         run: |
-          echo "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin registry-1.docker.io
+          docker login --username "$DOCKERHUB_USERNAME" --password "$DOCKERHUB_TOKEN"
           docker images
-          docker buildx build --platform linux/amd64 -t registry-1.docker.io/asppj/redis-insight:v0.3.0 . --push
+          docker buildx build --platform linux/amd64 -t docker.io/asppj/redis-insight:v0.3.0 . --push
           docker images
-          docker push registry-1.docker.io/asppj/redis-insight:v0.3.0
+          docker push docker.io/asppj/redis-insight:v0.3.0
       - name: Docker build arm64
         run: |
           docker images
-          docker buildx build --platform linux/arm64 -t registry-1.docker.io/asppj/redis-insight:v0.3.0_arm64 . --push
+          docker buildx build --platform linux/arm64 -t docker.io/asppj/redis-insight:v0.3.0_arm64 . --push
           docker images
-          docker push registry-1.docker.io/asppj/redis-insight:v0.3.0_arm64
+          docker push docker.io/asppj/redis-insight:v0.3.0_arm64
 
       # - name: Run build
       #   run: earthly  --allow-privileged +all-platform
