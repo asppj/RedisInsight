@@ -31,7 +31,7 @@ jobs:
         run: docker info
       - name: Docker Login
         run: |
-          echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin registry-1.docker.io
+          echo "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin registry-1.docker.io
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -78,7 +78,7 @@ jobs:
       #     platforms: all
       - name: Docker build amd64
         run: |
-          echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin registry-1.docker.io
+          echo "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin registry-1.docker.io
           docker images
           docker buildx build --platform linux/amd64 -t registry-1.docker.io/asppj/redis-insight:v0.3.0 . --push
           docker images
