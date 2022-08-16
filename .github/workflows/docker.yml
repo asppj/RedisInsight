@@ -79,7 +79,7 @@ jobs:
         run: |
           docker login --username "$DOCKERHUB_USERNAME" --password "$DOCKERHUB_TOKEN"
           docker images
-          docker buildx build --platform linux/amd64,linux/arm64 -t asppj/redis-insight:v0.3.0 . --push
+          docker buildx build --platform linux/amd64 -t asppj/redis-insight:v0.3.0 . --push
           docker images
           docker push asppj/redis-insight:v0.3.0
       - name: Docker build arm64
