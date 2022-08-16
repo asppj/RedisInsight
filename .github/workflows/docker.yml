@@ -42,9 +42,9 @@ jobs:
           image: tonistiigi/binfmt:latest
           platforms: all
       - name: Docker build arm64
-        run: docker buildx build --platform linux/arm64 -t asppj/redis-insight:v0.2.0_arm64 . --push
+        run: docker buildx build --platform linux/arm64 -t asppj/redis-insight:v0.3.0_arm64 . --push
       - name: Docker build amd64
-        run: docker buildx build --platform linux/amd64 -t asppj/redis-insight:v0.2.0_amd64 . --push
+        run: docker buildx build --platform linux/amd64 -t asppj/redis-insight:v0.3.0_amd64 . --push
       # - name: Run build
       #   run: earthly  --allow-privileged +all-platform
       # - name: Docker push
