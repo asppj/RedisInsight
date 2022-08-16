@@ -1,4 +1,4 @@
-FROM node:14.17-alpine as front
+FROM --platform=$TARGETPLATFORM node:14.17-alpine as front
 RUN apk update
 RUN apk add --no-cache --virtual .gyp \
         python \
@@ -9,21 +9,21 @@ COPY package.json yarn.lock babel.config.js tsconfig.json ./
 COPY configs ./configs
 COPY scripts ./scripts
 COPY redisinsight ./redisinsight
-RUN SKIP_POSTINSTALL=1 yarn install
+RUN yarn config set registry https://registry.npm.taobao.org/ && SKIP_POSTINSTALL=1 yarn install
 RUN yarn --cwd redisinsight/api
 RUN yarn build:web
 RUN yarn build:statics
 
-FROM node:14.17-alpine as back
+FROM --platform=$TARGETPLATFORM node:14.17-alpine as back
 WORKDIR /usr/src/app
 COPY redisinsight/api/package.json redisinsight/api/yarn.lock ./
-RUN yarn install
+RUN yarn config set registry https://registry.npm.taobao.org/ && yarn install
 COPY redisinsight/api ./
 COPY --from=front /usr/src/app/redisinsight/api/static ./static
 COPY --from=front /usr/src/app/redisinsight/api/defaults ./defaults
 RUN yarn run build:prod
 
-FROM node:14.17-slim
+FROM --platform=$TARGETPLATFORM node:14.17-slim
 # Set up mDNS functionality, to play well with Redis Enterprise
 # clusters on the network.
 RUN set -ex \
