@@ -36,7 +36,7 @@ jobs:
         run: |
           env
           docker login --username "$DOCKERHUB_USERNAME" --password "$DOCKERHUB_TOKEN"
-          docker login --username "asppj" --password "${{ secrets.DOCKERHUB_TOKEN }}"" registry-1.docker.io
+          docker login --username asppj --password "${{ secrets.DOCKERHUB_TOKEN }}" registry-1.docker.io
           # echo "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin registry-1.docker.io
       -
         name: Set up QEMU
