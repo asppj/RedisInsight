@@ -26,7 +26,14 @@ jobs:
             branch="${GITHUB_REF##*/}"
           fi
           git checkout -b "$branch" || true
-
+      - name: build
+        run: |
+          # PLATFORM=linux ARCH=x64 .circleci/redisstack/build_modules.sh
+          ls -alh
+          PLATFORM=linux ARCH=arm64 .circleci/redisstack/build_modules.sh
+          ls -alh
+          # PLATFORM=darwin ARCH=x64 .circleci/redisstack/build_modules.sh
+          # PLATFORM=darwin ARCH=arm64 .circleci/redisstack/build_modules.sh
       - name: Docker info
         run: docker info
       - name: Docker Login
