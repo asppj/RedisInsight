@@ -6,7 +6,7 @@ RUN apk add --no-cache --virtual .gyp \
         g++
 WORKDIR /usr/src/app
 COPY package.json yarn.lock babel.config.js tsconfig.json ./
-RUN SKIP_POSTINSTALL=1 yarn install -registry=https://registry.npm.taobao.org/ --frozen-lockfile --network-timeout 11000000
+RUN yarn config set registry https://registry.npm.taobao.org/ && SKIP_POSTINSTALL=1 yarn install -registry=https://registry.npm.taobao.org/ --frozen-lockfile --network-timeout 11000000
 COPY configs ./configs
 COPY scripts ./scripts
 COPY redisinsight ./redisinsight
@@ -21,7 +21,7 @@ RUN yarn build:statics
 FROM node:16.15.1-alpine as back
 WORKDIR /usr/src/app
 COPY redisinsight/api/package.json redisinsight/api/yarn.lock ./
-RUN yarn install -registry=https://registry.npm.taobao.org/ --frozen-lockfile --network-timeout 11000000
+RUN yarn config set registry https://registry.npm.taobao.org/ && yarn install -registry=https://registry.npm.taobao.org/ --frozen-lockfile --network-timeout 11000000
 COPY redisinsight/api ./
 COPY --from=front /usr/src/app/redisinsight/api/static ./static
 COPY --from=front /usr/src/app/redisinsight/api/defaults ./defaults
@@ -72,7 +72,7 @@ COPY --from=front /usr/src/app/redisinsight/ui/dist ./redisinsight/ui/dist
 
 # Build BE prod dependencies here to build native modules
 COPY redisinsight/api/package.json redisinsight/api/yarn.lock ./redisinsight/api/
-RUN yarn --cwd ./redisinsight/api install --production
+RUN yarn config set registry https://registry.npm.taobao.org/ && yarn --cwd ./redisinsight/api install --production
 COPY redisinsight/api/.yarnclean.prod ./redisinsight/api/.yarnclean
 RUN yarn --cwd ./redisinsight/api autoclean --force
 
