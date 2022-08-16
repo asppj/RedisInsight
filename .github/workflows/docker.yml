@@ -11,12 +11,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      username: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-      password: ${{ secrets.DOCKERHUB_TOKEN }}
-      FORCE_COLOR: 1
+    # env:
+    #   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+    #   username: ${{ secrets.DOCKERHUB_USERNAME }}
+    #   password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    #   DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    #   FORCE_COLOR: 1
     steps:
       - uses: actions/checkout@v3
       - name: Put back the git branch into git (Earthly uses it for tagging)
@@ -42,9 +43,9 @@ jobs:
       -
         name: Login to DockerHub
         uses: docker/login-action@v2
-        # with:
-        #   username: ${{ secrets.DOCKERHUB_USERNAME }}
-        #   password: ${{ secrets.DOCKERHUB_TOKEN }}
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       # -
       #   name: Login to GitHub Container Registry
       #   uses: docker/login-action@v2
@@ -60,7 +61,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            asppj/redisInsight:latest
+            asppj/redis-insight:latest
 
 
 
