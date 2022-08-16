@@ -26,14 +26,7 @@ jobs:
             branch="${GITHUB_REF##*/}"
           fi
           git checkout -b "$branch" || true
-      - name: build
-        run: |
-          # PLATFORM=linux ARCH=x64 .circleci/redisstack/build_modules.sh
-          ls -alh
-          PLATFORM=linux ARCH=arm64 .circleci/redisstack/build_modules.sh
-          ls -alh
-          # PLATFORM=darwin ARCH=x64 .circleci/redisstack/build_modules.sh
-          # PLATFORM=darwin ARCH=arm64 .circleci/redisstack/build_modules.sh
+
       - name: Docker info
         run: docker info
       - name: Docker Login
@@ -96,7 +89,7 @@ jobs:
           docker buildx build --platform linux/amd64 -t index.docker.io/asppj/redis-insight:v0.3.0 . -o local --push
           ls -alh
           docker images
-          # docker push index.docker.io/asppj/redis-insight:v0.3.0
+          docker push index.docker.io/asppj/redis-insight:v0.3.0
       - name: Docker build amd64
         run: |
           # docker login --username "$DOCKERHUB_USERNAME" --password "$DOCKERHUB_TOKEN"
