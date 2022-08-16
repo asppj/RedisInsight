@@ -37,7 +37,7 @@ jobs:
           env
           docker login --username "$DOCKERHUB_USERNAME" --password "$DOCKERHUB_TOKEN"
           cat /home/runner/.docker/config.json
-          docker login --username asppj --password "${{ secrets.DOCKERHUB_TOKEN }}" registry-1.docker.io
+          # docker login --username asppj --password "${{ secrets.DOCKERHUB_TOKEN }}" registry-1.docker.io
           # echo "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin registry-1.docker.io
       -
         name: Set up QEMU
@@ -87,15 +87,15 @@ jobs:
         run: |
           # docker login --username "$DOCKERHUB_USERNAME" --password "$DOCKERHUB_TOKEN"
           docker images
-          docker buildx build --platform linux/amd64 -t docker.io/asppj/redis-insight:v0.3.0 . --push
+          docker buildx build --platform linux/amd64 -t index.docker.io/asppj/redis-insight:v0.3.0 . --push
           docker images
-          docker push docker.io/asppj/redis-insight:v0.3.0
+          docker push index.docker.io/asppj/redis-insight:v0.3.0
       - name: Docker build arm64
         run: |
           docker images
-          docker buildx build --platform linux/arm64 -t docker.io/asppj/redis-insight:v0.3.0_arm64 . --push
+          docker buildx build --platform linux/arm64 -t index.docker.io/asppj/redis-insight:v0.3.0_arm64 . --push
           docker images
-          docker push docker.io/asppj/redis-insight:v0.3.0_arm64
+          docker push index.docker.io/asppj/redis-insight:v0.3.0_arm64
 
       # - name: Run build
       #   run: earthly  --allow-privileged +all-platform
