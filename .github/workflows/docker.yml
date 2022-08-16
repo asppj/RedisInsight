@@ -35,7 +35,7 @@ jobs:
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
           env
-          docker login --username "sdfsafsdfsd" --password "$DOCKERHUB_TOKEN"
+          docker login --username ${{ env.DOCKERHUB_USERNAME }} --password ${{ env.DOCKERHUB_TOKEN }}
           cat /home/runner/.docker/config.json
           # docker login --username asppj --password "${{ secrets.DOCKERHUB_TOKEN }}" registry-1.docker.io
           # echo "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin registry-1.docker.io
