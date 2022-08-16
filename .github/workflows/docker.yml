@@ -31,7 +31,8 @@ jobs:
         run: docker info
       - name: Docker Login
         run: |
-          echo "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin registry-1.docker.io
+          docker login --username "$DOCKERHUB_USERNAME" --password "$DOCKERHUB_TOKEN"
+          # echo "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin registry-1.docker.io
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
